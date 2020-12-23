@@ -1,0 +1,71 @@
+
+@startuml GradesServer
+ hide circle
+
+entity Course{
+    id: number
+    --
+    groups: Group[]
+}
+
+entity Group{
+    id: number
+    name: string
+    --
+    subjects: Subject[]
+    students: Student[]
+    grades: Grade[]
+}
+entity GroupSubject{
+    id: number
+    --
+    groupId:number
+    sugjectId:number
+    ' subjects: Subject[]
+    ' students: Student[]
+    ' grades: Grade[]
+}
+entity Subject{
+    id: number
+    --
+    name: string
+    typeId: number
+}
+entity Type{
+    id: number
+    --
+    name: string
+    ' type: string
+}
+
+entity Student{
+    id: number
+    --
+    name: string
+}
+
+' entity Grade{
+'     id: number
+'     --
+'     subjectId: number
+'     studentId: number
+'     gradeValue: number
+' }
+entity Grade{
+    id: number
+    --
+    subjectId: number
+    studentId: number
+    gradeValue: number
+    date: date
+}
+Group }o--|| Course
+GroupSubject }o--|| Group
+GroupSubject }o--|| Subject
+Subject }o--|| Type
+' Subject }o--|| Group
+Student }o--|| Group
+Grade }o--|| Group
+Student }o--|| Grade
+Subject }o--|| Grade
+@enduml

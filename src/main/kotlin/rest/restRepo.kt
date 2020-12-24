@@ -285,6 +285,12 @@ fun <T : Item> Application.restRepo(
 		route("/grades") {
 			post {
 				parseBody(gradeSerializer)?.let { elem ->
+//					val temp = elem.apply {
+//						if (this.value > 5) this.value = 5
+//						else {
+//							if (this.value < 1) this.value = 1 else this.value
+//						}
+//					}
 					if (gradeRepo.create(elem))
 						call.respond(HttpStatusCode.OK, "Grades was created")
 					else

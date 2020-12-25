@@ -33,22 +33,22 @@ class Grade(
 	val subjectID: Int,
 	var value: Int,
 	@Serializable(with=DateSerializer::class)
-	val date: LocalDate= LocalDate.now(),
+	val date: LocalDate = LocalDate.now(),
 	override var id: Int = -1
 ) : Item
 
 class GradeTable : ItemTable<Grade>() {
 	override val primaryKey = PrimaryKey(id, name = "grade_id_pk")
-	val studentID = integer("studentid").references(subjectsTable.id, onDelete = ReferenceOption.CASCADE)
-	val subjectID = integer("subjectid").references(studentsTable.id, onDelete = ReferenceOption.CASCADE)
-	val date = date("date")
+	val studentID = integer("studentid").references(studentsTable.id, onDelete = ReferenceOption.CASCADE)
+	val subjectID = integer("subjectid").references(subjectsTable.id, onDelete = ReferenceOption.CASCADE)
 	val value = integer("value")
+	val date = date("date")
 
 	override fun fill(builder: UpdateBuilder<Int>, item: Grade) {
 		builder[studentID] = item.studentID
 		builder[subjectID] = item.subjectID
-		builder[date] = item.date
 		builder[value] = if(item.value > 5) 5 else if(item.value < 1) 1 else item.value
+		builder[date] = item.date
 	}
 
 	override fun readResult(result: ResultRow) =

@@ -8,21 +8,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 class RepoDSL<T : Item>(
 	private val table: ItemTable<T>
 ) : Repo<T> {
-
 	override fun create(element: T) =
 		transaction {
 			table.insertAndGetIdItem(element).value
 			true
-		}
-
-	override fun read(id: Int) =
-		transaction {
-			table
-				.select { table.id eq id }
-				.firstOrNull()
-				?.let {
-					table.readResult(it)
-				}
 		}
 
 	override fun update(id: Int, element: T) =
@@ -39,6 +28,16 @@ class RepoDSL<T : Item>(
 		transaction {
 			table.selectAll()
 				.mapNotNull {
+					table.readResult(it)
+				}
+		}
+
+	override fun read(id: Int) =
+		transaction {
+			table
+				.select { table.id eq id }
+				.firstOrNull()
+				?.let {
 					table.readResult(it)
 				}
 		}

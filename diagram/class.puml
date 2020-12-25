@@ -1,5 +1,4 @@
-
-@startuml GradesServer
+@startuml GradesClass
 hide circle
 
 entity Group{
@@ -39,10 +38,13 @@ entity Grade{
     gradeValue: number
     date: date
 }
-GroupSubject }|--|| Group
-GroupSubject }|--|| Subject
-Subject }|--|| Type
-Student }|--|| Group
-Student }|--|| Grade
-Subject }|--|| Grade
+
+Group "1" <-- "*" GroupSubject
+Subject "1" <-- "*" GroupSubject
+
+Type "1" <-- "*" Subject
+Grade "1" <-- "*" Subject
+Grade "1" <-- "*" Student
+Student "1" <-- "*" Group
 @enduml
+

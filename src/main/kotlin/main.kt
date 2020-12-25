@@ -11,8 +11,13 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import repo.*
 import rest.restRepo
 
-fun Application.myapp() {
-	Database.connect("jdbc:h2:tcp://localhost/~/test", "org.h2.Driver", user = "sa", password = "1")
+fun Application.module() {
+	Database.connect(
+		"jdbc:h2:tcp://localhost/~/test",
+		"org.h2.Driver",
+		user = "sa",
+		password = "1"
+	)
 
 	install(ContentNegotiation) {
 		json()
@@ -61,7 +66,7 @@ fun main() {
 	embeddedServer(
 		Netty,
 		watchPaths = listOf("gradleproject"),
-		module = Application::myapp,
+		module = Application::module,
 		port = 8080
 	).start(wait = true)
 }

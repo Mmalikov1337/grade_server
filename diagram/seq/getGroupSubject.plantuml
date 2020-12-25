@@ -1,0 +1,13 @@
+@startuml getGroupSubject
+
+actor User
+
+User -> GroupSubject : get GroupSubject
+
+alt HttpStatusCode.OK
+    GroupSubject -> User : return GroupSubject JSON
+else HttpStatusCode.BadRequest
+    GroupSubject -> User : return  NOT OK message
+end
+
+@enduml

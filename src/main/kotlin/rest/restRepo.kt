@@ -77,6 +77,7 @@ fun <T : Item> Application.restRepo(
 				}
 			}
 		}
+		//+
 		route("/group/{id}") {
 			get {
 				parseId()?.let { id ->
@@ -104,6 +105,7 @@ fun <T : Item> Application.restRepo(
 				} ?: call.respond(HttpStatusCode.BadRequest, "Wrong id")
 			}
 		}
+		//+
 		route("/group/{id}/students") {
 			get {
 				parseId()?.let { id ->
@@ -117,6 +119,7 @@ fun <T : Item> Application.restRepo(
 				} ?: call.respond(HttpStatusCode.BadRequest, "Wrong id")
 			}
 		}
+		//+
 		route("/group/subjects") {
 			get {
 				val groupSubjects = groupSubjectRepo.all()
@@ -135,6 +138,7 @@ fun <T : Item> Application.restRepo(
 				} ?: call.respond(HttpStatusCode.BadRequest, "Wrong object GroupSubject")
 			}
 		}
+		//+
 		route("/group/{id}/subjects") {
 			get {
 				parseId()?.let { id ->
@@ -148,6 +152,7 @@ fun <T : Item> Application.restRepo(
 				} ?: call.respond(HttpStatusCode.BadRequest, "Wrong id")
 			}
 		}
+		//+
 
 		route("/subjects") {
 			post {
@@ -231,14 +236,6 @@ fun <T : Item> Application.restRepo(
 					}
 				} ?: call.respond(HttpStatusCode.BadRequest, "Wrong object Student")
 			}
-//			post {
-//				parseBody(studentSerializer)?.let { elem ->
-//					if (studentRepo.create(elem))
-//						call.respond(HttpStatusCode.OK, "Student created")
-//					else
-//						call.respond(HttpStatusCode.NotFound)
-//				} ?: call.respond(HttpStatusCode.BadRequest, "Wrong object Student")
-//			}
 			delete {
 				parseId()?.let { id ->
 					if (studentRepo.delete(id))
@@ -285,12 +282,6 @@ fun <T : Item> Application.restRepo(
 		route("/grades") {
 			post {
 				parseBody(gradeSerializer)?.let { elem ->
-//					val temp = elem.apply {
-//						if (this.value > 5) this.value = 5
-//						else {
-//							if (this.value < 1) this.value = 1 else this.value
-//						}
-//					}
 					if (gradeRepo.create(elem))
 						call.respond(HttpStatusCode.OK, "Grades was created")
 					else

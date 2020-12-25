@@ -1,0 +1,13 @@
+@startuml changeType
+
+actor User
+
+User -> TypeTable : change Type
+
+alt HttpStatusCode.OK
+    TypeTable -> User : return OK message
+else HttpStatusCode.BadRequest
+    TypeTable -> User : return NOT OK message
+end
+
+@enduml

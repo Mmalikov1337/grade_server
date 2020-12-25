@@ -1,0 +1,13 @@
+@startuml getGraed
+
+actor User
+
+User -> GradeTable : get grade
+
+alt HttpStatusCode.OK
+    GradeTable -> User : return grade JSON
+else HttpStatusCode.BadRequest
+    GradeTable -> User : return NOT OK message
+end
+
+@enduml

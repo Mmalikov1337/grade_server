@@ -20,11 +20,7 @@ class GroupsTable : ItemTable<Group>() {
 		builder[name] = item.name
 	}
 
-	override fun readResult(result: ResultRow) =
-		Group(
-			result[name],
-			result[id].value
-		)
+	override fun readResult(result: ResultRow) =Group(result[name],	result[id].value)
 }
 
 val groupsTable = GroupsTable()

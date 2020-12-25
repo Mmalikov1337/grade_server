@@ -1,0 +1,27 @@
+@startuml
+
+left to right direction
+
+actor User
+
+rectangle {
+    User -- ("Change groups")
+    User -- ("Get groups")
+
+    User -- ("Change grades")
+    User -- ("Get grades")
+
+    User -- ("Change groupSubject")
+    User -- ("Get groupSubject")
+
+    User -- ("Change subject")
+    User -- ("Get subject")
+
+    User -- ("Change student")
+    User -- ("Get student")
+
+    User -- ("Change type")
+    User -- ("Get type")
+}
+
+@enduml

@@ -1,0 +1,13 @@
+@startuml changeSubject
+
+actor User
+
+User -> SubjectTable : get Subject
+
+alt HttpStatusCode.OK
+    SubjectTable -> User : return Subject JSON
+else HttpStatusCode.BadRequest
+    SubjectTable -> User : return NOT OK message
+end
+
+@enduml

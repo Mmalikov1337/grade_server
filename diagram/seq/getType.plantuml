@@ -1,0 +1,13 @@
+@startuml getType
+
+actor User
+
+User -> TypeTable : get Type
+
+alt HttpStatusCode.OK
+    TypeTable -> User : return Type JSON
+else HttpStatusCode.BadRequest
+    TypeTable -> User : return NOT OK message
+end
+
+@enduml

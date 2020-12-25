@@ -1,0 +1,13 @@
+@startuml getStudent
+
+actor User
+
+User -> StudentTable : get Student
+
+alt HttpStatusCode.OK
+    StudentTable -> User : return Student JSON
+else HttpStatusCode.BadRequest
+    StudentTable -> User : return NOT OK message
+end
+
+@enduml

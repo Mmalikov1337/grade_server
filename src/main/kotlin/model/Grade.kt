@@ -27,19 +27,6 @@ object DateSerializer : KSerializer<LocalDate> {
 	}
 }
 
-//@Serializable
-//open class Task (
-//	open val name: String,
-//	open val description: String,
-//	open val difficulty: String = "MEDIUM",
-//	val type: String,
-//	open val characterId: Int,
-//	@Serializable(with=DateSerializer::class)
-//	open var deadline: LocalDate= LocalDate.MIN,
-//	@Serializable(with=DateSerializer::class)
-//	open val startDate: LocalDate= LocalDate.now(),
-//	open var completionCount: Int= 0,
-//)
 @Serializable
 class Grade(
 	val studentID: Int,

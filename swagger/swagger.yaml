@@ -1,0 +1,791 @@
+swagger: "2.0"
+info:
+  description: "Сервер позволяет получать и редактировать оценки студентов по различным предметам (а также самих студентов и предметы, студенты объединяются по группам, у каждой группы – свой список предметов), получать списки учащихся по различным критериям (имеет двойки, только 4 и 5 и т. п.)."
+  version: "1.0.0"
+  title: "grade server"
+host: "petstore.swagger.io"
+basePath: "/v2"
+schemes:
+- "https"
+- "http"
+paths:
+
+  /group:
+    post:
+      tags:
+      - "group"
+      summary: "create group"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          $ref: "#/definitions/Group"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid Order"
+    get:
+      tags:
+      - "group"
+      summary: "return group list"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+        "400":
+          description: "Invalid Order"
+          
+  /group/{id}:
+    get:
+      tags:
+      - "group"
+      summary: "return group by id"
+      operationId: "findPetsByStatus"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of group to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Group"
+        "400":
+          description: "Invalid Order"
+    put:
+        tags:
+        - "group"
+        summary: "edit group by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of group to edit"
+          required: true
+          type: "integer"
+          format: "int64"
+          
+        - in: "body"
+          name: "body"
+          schema:
+            $ref: "#/definitions/Group"
+          
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+    delete:
+        tags:
+        - "group"
+        summary: "delete group by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of group to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /group/{id}/students:
+    get:
+      tags:
+      - "group"
+      summary: "return students in group"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID group"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        "400":
+          description: "Invalid Order"
+          
+  /group/subjects:
+    get:
+      tags:
+      - "group"
+      summary: "return list of GroupSubject"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GroupSubject"
+        "400":
+          description: "Invalid Order"
+    post:
+      tags:
+      - "group"
+      summary: "create groupSubject object"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "Tags to filter by"
+        required: true
+        schema:
+          $ref: "#/definitions/GroupSubject"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid Order"
+          
+  /group/{id}/subjects:
+    get:
+      tags:
+      - "group"
+      summary: "return subjects of group by id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "group to return subjects"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GroupSubject"
+        "400":
+          description: "Invalid Order"
+          
+  /subjects:
+    get:
+        tags:
+        - "subjects"
+        summary: "get subjects list"
+        produces:
+        - "application/json"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+    post:
+        tags:
+        - "subjects"
+        summary: "create new subject"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Subject"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /subjects/{id}:
+    get:
+        tags:
+        - "subjects"
+        summary: "get subjects by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of subjects to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+    put:
+        tags:
+        - "subjects"
+        summary: "edit subject by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of subjects to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Subject"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+    delete:
+        tags:
+        - "subjects"
+        summary: "delete subject by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of subject to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /students:
+    get:
+        tags:
+        - "student"
+        summary: "get students list"
+        produces:
+        - "application/json"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Student"
+          "400":
+            description: "Invalid Order"
+    post:
+        tags:
+        - "student"
+        summary: "create new student"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Student"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /student/{id}:
+    get:
+        tags:
+        - "student"
+        summary: "get student by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of subjects to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+                $ref: "#/definitions/Student"
+          "400":
+            description: "Invalid Order"
+    put:
+        tags:
+        - "student"
+        summary: "edit student by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of subjects to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Subject"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+    delete:
+        tags:
+        - "student"
+        summary: "delete student by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of subjects to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /students/has={query}:
+    get:
+        tags:
+        - "student"
+        summary: "get students, has grade = n"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "query"
+          in: "path"
+          description: "grade value"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+            
+  /students/more={query}:
+    get:
+        tags:
+        - "student"
+        summary: "get students, has grade more then n"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "query"
+          in: "path"
+          description: "grade value"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+            
+  /students/less={query}:
+    get:
+        tags:
+        - "student"
+        summary: "get students, has grade less then n"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "query"
+          in: "path"
+          description: "grade value"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+  
+  /grades:
+    get:
+        tags:
+        - "grades"
+        summary: "get grades list"
+        produces:
+        - "application/json"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Grade"
+          "400":
+            description: "Invalid Order"
+    post:
+        tags:
+        - "grades"
+        summary: "create new grades"
+        produces:
+        - "application/xml"
+        - "application/json"
+        parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Grade"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /grades/{id}:
+    get:
+        tags:
+        - "grades"
+        summary: "get grade by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of grade to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Grade"
+          "400":
+            description: "Invalid Order"
+    put:
+        tags:
+        - "grades"
+        summary: "edit grade by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of grade to edit"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Grade"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+    delete:
+        tags:
+        - "grades"
+        summary: "delete grade by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of grade to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /grades/has={query}:
+    get:
+        tags:
+        - "grades"
+        summary: "get grades = n"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "query"
+          in: "path"
+          description: "grade value"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+            
+  /grades/more={query}:
+    get:
+        tags:
+        - "grades"
+        summary: "get grades more then n"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "query"
+          in: "path"
+          description: "grade value"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+            
+  /grades/less={query}:
+    get:
+        tags:
+        - "grades"
+        summary: "get grades less then n"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "query"
+          in: "path"
+          description: "grade value"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Subject"
+          "400":
+            description: "Invalid Order"
+            
+  /types:
+    get:
+        tags:
+        - "types"
+        summary: "get types list"
+        produces:
+        - "application/json"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Type"
+          "400":
+            description: "Invalid Order"
+    post:
+        tags:
+        - "types"
+        summary: "create new types"
+        produces:
+        - "application/xml"
+        - "application/json"
+        parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Type"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+  /types/{id}:
+    get:
+        tags:
+        - "types"
+        summary: "get types by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of TypeReq to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Type"
+          "400":
+            description: "Invalid Order"
+    put:
+        tags:
+        - "types"
+        summary: "edit types by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of TypeReq to edit"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Type"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+    delete:
+        tags:
+        - "types"
+        summary: "delete types by id"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of TypeReq to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+        responses:
+          "200":
+            description: "successful operation"
+          "400":
+            description: "Invalid Order"
+            
+definitions:
+  Group:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      
+  Student:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      groupID:
+        type: "integer"
+        
+  Type:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+  
+  GroupSubject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      groupID:
+        type: "integer"
+      subjectID:
+        type: "integer"
+      
+  Subject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      typeID:
+        type: "integer"
+      
+  Grade:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      studentID:
+        type: "integer"
+      subjectID:
+        type: "integer"
+      value:
+        type: "integer"
+      date:
+        type: "string"
